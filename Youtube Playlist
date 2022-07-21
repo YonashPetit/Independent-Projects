@@ -1,0 +1,95 @@
+from googleapiclient.discovery import build
+import os
+import google_auth_oauthlib.flow
+import googleapiclient.discovery
+import googleapiclient.errors
+import requests
+
+
+#This is to delete those IDs
+def main():
+    # Disable OAuthlib's HTTPS verification when running locally.
+    # *DO NOT* leave this option enabled in production.
+    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
+    total_video_in_playlist = 50
+    api_key = "AIzaSyC7BKxMXYEuEJCbVWZjBErGK1Q3qkaYZLk"
+    playlist_id = 'LLVLoaDzLfQ-8fxA7XSc3CqA'
+    scopes = ["https://www.googleapis.com/auth/youtube.force-ssl",
+              "https://www.googleapis.com/auth/youtubepartner-channel-audit",
+              "https://www.googleapis.com/auth/youtube"]
+
+    api_service_name = "youtube"
+    api_version = "v3"
+    client_secrets_file = "client_secret.json"
+
+    # Get credentials and create an API client
+    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
+        client_secrets_file, scopes)
+    credentials = flow.run_console()
+    youtube = googleapiclient.discovery.build(
+        api_service_name, api_version, credentials=credentials)
+
+    # This is to get the playlistitemIDs
+
+    def GetList():
+
+        def GetVidID(x):
+            z = 0
+            IDs = []
+            for i in range(50):
+                try:
+                    IDs.append(x[0]["items"][z]["contentDetails"]["videoId"])
+                except:
+                    continue
+                z+=1
+            return IDs
+
+        def Leave_Rating(x):
+            for item in x:
+                try:
+                    request2 = youtube.videos().rate(
+                        id = item,
+                        rating = "none"
+                    )
+                    request2.execute()
+                    print("Video " + item + " has been unliked.")
+                except:
+                    continue
+
+        i = 0
+        response = []
+        while i <= 31:
+            try:
+                service = build('youtube', 'v3', developerKey=api_key, credentials=credentials)
+                request1 = service.playlistItems().list(
+                    pageToken=nextPageToken,
+                    part='contentDetails',
+                    playlistId=playlist_id,
+                    maxResults=total_video_in_playlist
+                )
+                response.append(request1.execute())
+                show_next_pageToken = request1.execute()
+                nextPageToken = show_next_pageToken["nextPageToken"]
+                Leave_Rating(GetVidID(response))
+
+            except:
+                service = build('youtube', 'v3', developerKey=api_key, credentials=credentials)
+                request1 = service.playlistItems().list(
+                    part='contentDetails',
+                    playlistId=playlist_id,
+                    maxResults=total_video_in_playlist,
+                )
+                response.append(request1.execute())
+                show_next_pageToken = request1.execute()
+                nextPageToken = show_next_pageToken["nextPageToken"]
+                Leave_Rating(GetVidID(response))
+            i += 1
+        return (response)
+
+    print(GetList())
+
+
+if __name__ == "__main__":
+    main()
+

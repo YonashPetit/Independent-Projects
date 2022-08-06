@@ -5,6 +5,7 @@ import googleapiclient.discovery
 import googleapiclient.errors
 import requests
 
+#Input API Key on line 17
 
 #This is to delete those IDs
 def main():
@@ -13,7 +14,7 @@ def main():
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
     total_video_in_playlist = 50
-    api_key = "AIzaSyC7BKxMXYEuEJCbVWZjBErGK1Q3qkaYZLk"
+    api_key = ""
     playlist_id = 'LLVLoaDzLfQ-8fxA7XSc3CqA'
     scopes = ["https://www.googleapis.com/auth/youtube.force-ssl",
               "https://www.googleapis.com/auth/youtubepartner-channel-audit",

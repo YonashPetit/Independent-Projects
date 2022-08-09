@@ -1,0 +1,20 @@
+list = []
+def make_number(x):
+    for i in range(1001):
+        list.append(i)
+    return list
+
+def FizzBuzz(y):
+    for character in y:
+        if character % 3 == 0 and character % 5 == 0:
+            list[character] = "FizzBuzz"
+        elif character % 3 == 0:
+            list[character] = "Fizz"
+        elif character % 5 == 0:
+            list[character] = "Buzz"
+        else:
+            continue
+    del list[0]
+    return list
+
+print(FizzBuzz(make_number(list)))

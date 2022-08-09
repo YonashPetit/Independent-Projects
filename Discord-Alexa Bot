@@ -1,0 +1,26 @@
+#start
+import discord
+import os
+BotToken = ""
+client = discord.Client()
+JustChatting = 691044247620550706
+
+
+@client.event
+async def on_ready():
+    print("We have loggin in as {0.user}" . format(client))
+
+@client.event
+async def on_message(message):
+    channel = client.get_channel(JustChatting)
+    online = (channel.members)
+
+    if message.content.startswith("1"):
+        i = 0
+        print(len(online))
+        while i < len(online):
+            print(online[i])
+            i = i + 1
+
+
+client.run(BotToken)

@@ -5,17 +5,16 @@ import googleapiclient.discovery
 import googleapiclient.errors
 import requests
 
-#Input API Key on line 17
+#Input API Key on line 16
+#Input your Liked Videos playlist id on line 17
 
 #This is to delete those IDs
 def main():
-    # Disable OAuthlib's HTTPS verification when running locally.
-    # *DO NOT* leave this option enabled in production.
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
     total_video_in_playlist = 50
     api_key = ""
-    playlist_id = 'LLVLoaDzLfQ-8fxA7XSc3CqA'
+    playlist_id = ''
     scopes = ["https://www.googleapis.com/auth/youtube.force-ssl",
               "https://www.googleapis.com/auth/youtubepartner-channel-audit",
               "https://www.googleapis.com/auth/youtube"]

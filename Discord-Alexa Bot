@@ -3,8 +3,9 @@ import discord
 import os
 BotToken = ""
 client = discord.Client()
-JustChatting = 691044247620550706
 
+#input your voice channel code on line 8
+VoiceChannel = " "
 
 @client.event
 async def on_ready():
@@ -12,7 +13,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    channel = client.get_channel(JustChatting)
+    channel = client.get_channel(VoiceChannel)
     online = (channel.members)
 
     if message.content.startswith("1"):
